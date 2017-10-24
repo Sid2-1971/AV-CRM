@@ -104,8 +104,8 @@ $(document).ready(function(){
   <div class="clearfix"></div>
 <div class="bot-border"></div>
 
-<div class="col-sm-5 col-xs-6 tital " >Phone Number:</div><div class="col-sm-7"><?php echo $array[11]?>
-  <a id="callbtn" style="color:black;text-decoration: none;cursor: pointer;" onclick="window.location.href='sip:<?php echo $array[11]; ?>'" >  <img src="/images/phone.png" height="30px">
+<div class="col-sm-5 col-xs-6 tital " >Phone Number:</div><div class="col-sm-7"><?php //echo $array[11]?>
+<a id="callbtn" style="color:black;text-decoration: none;cursor: pointer;" onclick="callbtn('<?php echo(base64_encode(trim($array[11])))?>')" >   <img src="/images/phone.png" height="30px">
                         </a>
 </div>
 
@@ -370,17 +370,32 @@ Leave a note:
         ?>
 <script type="text/javascript">
 
-  $('#callbtn').click(function(){   
-      $.ajax({    
-
-          url : 'operator_count_calls.php',        
-          type : 'post',     
-
-            console.log(data);          
-          }           
-      });         
- });
-
+function callbtn(nr){
+    $.ajax({
+        url : 'operator_count_calls.php', 
+        type : 'post',
+        data:{
+          id:"<?php echo (int)$_GET['user_id'] ?>",
+          admin:"<?php echo $_SESSION['operator_username'] ?>"
+          
+             },  
+        success : function(data){
+          //console.log(data);
+        }
+    });
+//call ami
+    $.ajax({
+        url : 'ami/ami.php', 
+        type : 'post',
+        data:{
+             to:nr,
+          
+             },  
+        success : function(data){
+          console.log(data);
+        }
+    });
+};
 
 
 function removeNote(def){

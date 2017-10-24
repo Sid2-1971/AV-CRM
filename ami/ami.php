@@ -2,17 +2,15 @@
 //// asterisk manager api
 require_once('../db_connect.php');
 require_once ('../session.php');
+$operator=$_SESSION['operator_username'];
+$r=mysqli_query($dbconfig,'SELECT * FROM vicidial_users WHERE custom_one ="'.$operator.'" ');
+$row=mysqli_fetch_assoc($r);
 
-
-$r=mysqli_query($dbconfig,'SELECT * FROM vicidial_users WHERE custom_one ="'.$_SESSION['operator_username'].'" ');
-while($row=mysqli_fetch_assoc($r)){
 	$from_ext= $row['phone_login'];
 
-}	
-
-$to_ext = base64_decode(base64_decode($_REQUEST['to']));
-$username='ami';
-$secret='test';
+$to_ext = base64_decode($_REQUEST['to']);
+$username='sendcron';
+$secret='1234';
 $asterisk_ip=$_REQUEST['asterisk_ip'];
 
 $timeout = 10;
@@ -33,11 +31,11 @@ fputs($socket, "Channel: SIP/$from_ext\r\n" );
 fputs($socket, "Exten: $to_ext\r\n" );
 fputs($socket, "Context: default\r\n" ); 
 fputs($socket, "Priority: 1\r\n" );
-fputs($socket, "Callerid: $from_ext\r\n ");
+fputs($socket, "Callerid: L`Avenir\r\n ");
 fputs($socket, "Async: yes\r\n\r\n" );
 
 $log=fgets($socket,128);
-echo $log;
+echo $from_ext." > ".$to_ext;
 
 //echo $to_ext;
 
