@@ -50,7 +50,7 @@ include_once 'functions.php'
       	<?php
         if(isset($_SESSION['operator_username'])){
       	if(isset($_GET['user_id'])){
-      		$query = "SELECT * from user where id='".(int)$_GET['user_id']."' AND reg_by='".$_SESSION['operator_username']."'";
+      		$query = "SELECT * from user where id='".(int)$_GET['user_id']."' ";
       		$result = mysqli_query($con,$query);
 		if(!$result)
 			die('Error: ' . mysqli_error());
