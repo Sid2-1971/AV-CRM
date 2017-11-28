@@ -258,7 +258,7 @@ if (isset($row['meet'])){
 $(function () {
   $("#status").change(function() {
     var val = $(this).val();
-    if(val === "Potential" || val==="Follow Up" || val==="Interested") {
+    if(val === "Potential" || val==="Follow Up") {
        
       
             $('#s111').html("<input type='text' name='dt' id='dat<?php echo $_GET['user_id']; ?>' class='form-control' placeholder='Time & Date' required  />")
