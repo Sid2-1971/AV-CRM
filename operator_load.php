@@ -796,6 +796,7 @@ function main_chart(){
             <th><strong>ID</strong></th>
             <th><strong>Name</strong></th>
             <th><strong>Status</strong></th>
+            <th><strong>Country</strong></th>
             <th><center><strong>Note</strong></center></th>
             <th><center><strong>Last Call</strong></center></th>
             <th><center><strong>Meeting</strong></center></th>
@@ -815,6 +816,13 @@ function main_chart(){
            <td> <a style="cursor: pointer;" id="atitle" onclick='show_profile(<?php echo $row['id'] ?>)'><?php echo $row['name'] ?></a></td>
 
           <td><?php echo $row['status'] ?></td>
+          <td>
+            <?php 
+                $country=mysqli_query($con,"SELECT country FROM user WHERE id='".$row['id']."'");
+                $country=$country->fetch_assoc();
+                echo $country['country'];
+             ?>
+           </td>
            <td width="30%"><?php
 
           $result1 = op_status($con,(int) $row['id'],$_SESSION['operator_username']);
@@ -831,7 +839,7 @@ function main_chart(){
          <td><center>
           <?php
          
-          $result11 = op_last_call($con,(int) $row['id'],$_SESSION['operator_username']);
+          $result11 = mysqli_query($con,"SELECT `date` FROM call_count WHERE id='".$row['id']."' ORDER BY `date` DESC LIMIT 1");
     if(!$result1)
       die('Error: ' . mysqli_error());
     else{
@@ -841,9 +849,9 @@ function main_chart(){
           ?>
            
            
-           <?php  if (isset($row11['lcall'])) {
+           <?php  if (isset($row11['date'])) {
             
-                $date_arr= explode(" ", $row11['lcall']);
+                $date_arr= explode(" ", $row11['date']);
                     $date= $date_arr[0];
                     $time= $date_arr[1];
                     

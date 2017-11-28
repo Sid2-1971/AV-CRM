@@ -668,7 +668,7 @@ if (!isset($_GET['startrow']) or !is_numeric($_GET['startrow'])) {
     cursor: pointer;
   }
 </style>
- 
+ <button  style='float: left; margin-right: 3px' type="button" class="btn btn-danger h_buttons" data-toggle="modal" data-target="#delete_lead_modal">Delete</button>
 		<select style="float: left;width: 110px" id="operator" name="operator" class="btn  btn-info h_buttons sendtobtn">
 		<option selected="" disabled="">Send To..</option>
 	    <?php
@@ -695,8 +695,11 @@ if (!isset($_GET['startrow']) or !is_numeric($_GET['startrow'])) {
 	$('#movein').on('change',function(){
 		move_sec();
 	});
+
 </script>
-         <style type="text/css">
+
+
+<style type="text/css">
          	body {
 	position: relative;
 }
@@ -1347,6 +1350,29 @@ $("#select_all").click(function(){
   </div>
 </div>
 
+<div id="delete_lead_modal" class="modal fade" role="dialog">
+  <div  class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content" >
+      <div class="modal-header">
+
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Are  you sure to delete?</h4>
+
+      </div>
+      <div class="modal-body" >
+        <center>
+          <button class="btn btn-danger" onclick="del_leads()">Delete</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        </center>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
 
 <script type="text/javascript">
 
@@ -1458,6 +1484,21 @@ function sendto () {
         if(mv){
           mv = JSON.stringify(mv);
           $.post("move_sec.php",{mv:mv,movein:movein},function(data){
+            window.location.reload();
+          });
+        }
+
+      }
+      function del_leads () {
+        var dl = [];
+         var movein=$('#movein option:selected').attr('value');
+        $('.doA').each(function () {
+          if($(this).is(':checked'))
+            dl.push($(this).attr('id'));
+        });
+        if(dl){
+          dl = JSON.stringify(dl);
+          $.post("del_leads.php",{dl:dl},function(data){
             window.location.reload();
           });
         }

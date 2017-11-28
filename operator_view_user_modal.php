@@ -112,10 +112,20 @@ $(document).ready(function(){
   <div class="clearfix"></div>
 <div class="bot-border"></div>
 
-<div class="col-sm-5 col-xs-6 tital " >Phone Number:</div><div class="col-sm-7 callbtns"><?php// echo $array[11]?>
-  <a id="callbtn" class="callbtn1" style="color:black;text-decoration: none;cursor: pointer;" onclick="window.location.href='sip:-123<?php echo(base64_encode($prefix.$array[11])); ?>'" >  <img class="imgbtn" src="images/phone.png" height="30px"> </a>
+<div class="col-sm-5 col-xs-6 tital " >Phone Number:</div>
+<div class="col-sm-7 callbtns"><?php echo $array[11]?>
+  <a id="callbtn" class="callbtn1" style="color:black;text-decoration: none;cursor: pointer;" onclick="window.location.href='sip:<?php echo $array[11]; ?>'" >  <img class="imgbtn" src="images/phone.png" height="30px"> </a>
 
 </div>
+
+<?php if (isset($array[14]) &&  $array[14]!=''): ?>
+  <div class="col-sm-5 col-xs-6 tital " >Alt Number:</div>
+  <div class="col-sm-7 callbtns"><?php echo $array[14]?>
+  <a id="callbtn" class="callbtn1" style="color:black;text-decoration: none;cursor: pointer;" onclick="window.location.href='sip:<?php echo $array[14]; ?>'" >  <img class="imgbtn" src="images/phone.png" height="30px"> </a>
+
+</div>
+<?php endif ?>
+
 
   <div class="clearfix"></div>
 
